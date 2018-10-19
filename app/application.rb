@@ -1,6 +1,6 @@
 class Application
 
-  @@items = [Song.new("Sorry", "Justin Bieber"),
+  @@items = [Item.new("Sorry", "Justin Bieber"),
             Song.new("Hello","Adele")]
 
   def call(env)
