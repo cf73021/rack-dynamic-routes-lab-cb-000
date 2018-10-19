@@ -1,23 +1,20 @@
 class Application
- 
+
+  @@songs = [Song.new("Sorry", "Justin Bieber"),
+            Song.new("Hello","Adele")]
+
   def call(env)
     resp = Rack::Response.new
- 
-    num_1 = Kernel.rand(1..20)
-    num_2 = Kernel.rand(1..20)
-    num_3 = Kernel.rand(1..20)
- 
-    resp.write "#{num_1}\n"
-    resp.write "#{num_2}\n"
-    resp.write "#{num_3}\n"
- 
-    if num_1==num_2 && num_2==num_3
-      resp.write "You Win"
-    else
-      resp.write "You Lose"
+    req = Rack::Request.new(env)
+
+    if req.path.match(/songs/)
+
+      song_title = req.path.split("/songs/").last #turn /songs/Sorry into Sorry
+      song = @@songs.find{|s| s.title == song_title}
+
+      resp.write song.artist
     end
- 
+
     resp.finish
   end
- 
 end
